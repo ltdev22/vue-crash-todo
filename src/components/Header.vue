@@ -1,12 +1,18 @@
 <template>
     <header>
-        <h1>Task Tracker</h1>
+        <h1>{{ appTitle }}</h1>
     </header>
 </template>
 
 <script>
 export default {
-    name: 'Header'
+    name: 'Header',
+    props: {
+        appTitle: {
+            type: String,
+            default: 'Hello Vue'
+        }
+    },
 }
 </script>
 
