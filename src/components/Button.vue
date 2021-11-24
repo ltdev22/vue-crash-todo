@@ -3,16 +3,16 @@
 </template>
 
 <script>
-export default {
-    name: 'Button',
-    props: {
-        btnText: String,
-        btnColor: String
-    },
-    methods: {
-        onClick() {
-            console.log('Click!');
-        }
-    }
-}
+    export default {
+        name: 'Button',
+        props: {
+            btnText: String,
+            btnColor: String,
+        },
+        methods: {
+            onClick() {
+                this.$emit('btn-click');
+            },
+        },
+    };
 </script>
