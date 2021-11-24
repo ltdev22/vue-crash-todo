@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Header appTitle="Task Tracker" />
-        <Tasks :tasks="tasks" @delete-task="deleteTask" />
+        <Tasks :tasks="tasks" @delete-task="deleteTask" @toggle-reminder="toggleReminder" />
     </div>
 </template>
 
@@ -21,11 +21,21 @@
             };
         },
         methods: {
-            deleteTask(index) {
-                this.tasks.splice(this.tasks.indexOf(index), 1);
-                // this.tasks = this.tasks.filter((task) => {
-                //     task.id !== taskId;
-                // });
+            deleteTask(taskId) {
+                // this.tasks.splice(this.tasks.indexOf(index), 1);
+                console.log(taskId);
+                this.tasks = this.tasks.filter((task) => {
+                    console.log(task.id);
+                    task.id == taskId;
+                });
+            },
+            toggleReminder(taskId) {
+                // this.tasks.splice(this.tasks.indexOf(index), 1);
+                console.log(taskId);
+                this.tasks = this.tasks.map((task) => {
+                    console.log(task.id);
+                    task.id == taskId ? { ...task, reminder: !task.reminder } : task;
+                });
             },
         },
         created() {
