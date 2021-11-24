@@ -22,19 +22,14 @@
         },
         methods: {
             deleteTask(taskId) {
-                // this.tasks.splice(this.tasks.indexOf(index), 1);
-                console.log(taskId);
                 this.tasks = this.tasks.filter((task) => {
                     console.log(task.id);
-                    task.id == taskId;
+                    return task.id !== taskId;
                 });
             },
             toggleReminder(taskId) {
-                // this.tasks.splice(this.tasks.indexOf(index), 1);
-                console.log(taskId);
                 this.tasks = this.tasks.map((task) => {
-                    console.log(task.id);
-                    task.id == taskId ? { ...task, reminder: !task.reminder } : task;
+                    return task.id == taskId ? { ...task, reminder: !task.reminder } : task;
                 });
             },
         },
