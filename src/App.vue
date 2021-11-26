@@ -34,41 +34,59 @@
             toggleAddTask() {
                 this.showAddTask = !this.showAddTask;
             },
-            addTask(newTask) {
-                this.tasks = [...this.tasks, newTask];
-            },
-            deleteTask(taskId) {
-                this.tasks = this.tasks.filter((task) => {
-                    return task.id !== taskId;
+            async addTask(newTask) {
+                const res = await fetch('http://localhost:5000/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(newTask),
                 });
+
+                const data = await res.json();
+                this.tasks = [...this.tasks, data];
             },
-            toggleReminder(taskId) {
+            async deleteTask(taskId) {
+                const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+                    method: 'DELETE',
+                });
+
+                if (res.status === 200) {
+                    this.tasks = this.tasks.filter((task) => {
+                        return task.id !== taskId;
+                    });
+                } else {
+                    alert('Ooops! Task was not deleted');
+                }
+            },
+            async toggleReminder(taskId) {
+                const taskToToggle = await this.getTask(taskId);
+                const updatedTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
+                const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedTask),
+                });
+                const data = await res.json();
                 this.tasks = this.tasks.map((task) => {
-                    return task.id == taskId ? { ...task, reminder: !task.reminder } : task;
+                    return task.id == taskId ? { ...task, reminder: data.reminder } : task;
                 });
+            },
+            async getAllTasks() {
+                const res = await fetch('http://localhost:5000/tasks');
+                const data = await res.json();
+                return data;
+            },
+            async getTask(taskId) {
+                const res = await fetch(`http://localhost:5000/tasks/${taskId}`);
+                const data = await res.json();
+                return data;
             },
         },
-        created() {
-            this.tasks = [
-                {
-                    id: 1,
-                    text: 'Book flight tickets',
-                    day: '26th of November at 9:00pm',
-                    reminder: true,
-                },
-                {
-                    id: 2,
-                    text: 'Buy Christmas gifts',
-                    day: '23rd of December at 10:30am',
-                    reminder: true,
-                },
-                {
-                    id: 3,
-                    text: 'Buy Christmas turkey',
-                    day: '25th of December at 2:30pm',
-                    reminder: false,
-                },
-            ];
+        async created() {
+            this.tasks = await this.getAllTasks();
         },
     };
 </script>
