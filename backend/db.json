@@ -1,0 +1,22 @@
+{
+    "tasks": [
+        {
+            "id": 1,
+            "text": "Book my flight tickets",
+            "day": "26th of November",
+            "reminder": true
+        },
+        {
+            "id": 2,
+            "text": "Buy Christmas gifts",
+            "day": "24th of December",
+            "reminder": true
+        },
+        {
+            "id": 3,
+            "text": "Invite friends for Christmas party",
+            "day": "25th of December",
+            "reminder": false
+        }
+    ]
+}
