@@ -9,11 +9,14 @@
             <AddTask @add-task="addTask" />
         </div>
         <Tasks :tasks="tasks" @delete-task="deleteTask" @toggle-reminder="toggleReminder" />
+        <router-view></router-view>
+        <Footer />
     </div>
 </template>
 
 <script>
     import Header from './components/Header';
+    import Footer from './components/Footer';
     import Tasks from './components/Tasks';
     import AddTask from './components/AddTask';
 
@@ -21,6 +24,7 @@
         name: 'App',
         components: {
             Header,
+            Footer,
             Tasks,
             AddTask,
         },
